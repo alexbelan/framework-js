@@ -1,0 +1,61 @@
+# Зависимости
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Собранные файлы
+dist/
+build/
+*.local
+
+# Логи
+logs/
+*.log
+
+# Операционная система
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Временные файлы
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# Переменные окружения
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage и тесты
+coverage/
+.nyc_output/
+*.lcov
+
+# Другие
+*.pem
+.certificates/
+
