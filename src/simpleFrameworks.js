@@ -1,6 +1,8 @@
-// ============================================
-// ПРОСТОЙ ФРЕЙМВОРК ДЛЯ НОВИЧКОВ
-// ============================================
+import {
+  setCurrentComponentId,
+  clearCurrentComponentId,
+  componentIds,
+} from "./simpleState.js";
 
 /**
  * Создает HTML элемент
@@ -8,7 +10,7 @@
  * @param {Object} attributes - Атрибуты элемента (className, id, onClick и т.д.)
  * @param {...any} children - Дочерние элементы или текст
  * @returns {HTMLElement} Созданный элемент
- * 
+ *
  * Пример использования:
  * const button = createElement('button', {
  *   className: 'my-button',
@@ -64,7 +66,7 @@ export function createElement(tag, attributes = {}, ...children) {
  * Рендерит компонент в контейнер по ID
  * @param {Function|HTMLElement} component - Функция компонента или HTML элемент
  * @param {string} containerId - ID контейнера в HTML
- * 
+ *
  * Пример использования:
  * render(() => {
  *   return createElement('div', {}, 'Привет, мир!');
@@ -73,19 +75,26 @@ export function createElement(tag, attributes = {}, ...children) {
 export function render(component, containerId) {
   // Находим контейнер по ID
   const container = document.getElementById(containerId);
-  
+
   if (!container) {
     console.error(`Контейнер с ID "${containerId}" не найден!`);
     return;
   }
 
   // Очищаем контейнер
-  container.innerHTML = '';
+  container.innerHTML = "";
 
   // Если компонент - функция, вызываем её
   let element;
   if (typeof component === "function") {
+    let componentId = componentIds.get(component);
+    if (!componentId) {
+      componentId = `component_${Date.now()}_${Math.random()}`;
+      componentIds.set(component, componentId);
+    }
+    setCurrentComponentId(componentId);
     element = component();
+    clearCurrentComponentId();
   } else if (component instanceof HTMLElement) {
     element = component;
   } else {
@@ -93,9 +102,5 @@ export function render(component, containerId) {
     return;
   }
 
-  // Добавляем элемент в контейнер
-  if (element instanceof HTMLElement) {
-    container.appendChild(element);
-  }
+  container.appendChild(element);
 }
-
